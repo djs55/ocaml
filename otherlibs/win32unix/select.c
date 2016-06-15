@@ -909,9 +909,12 @@ static int fdlist_to_fdset(value fdlist, fd_set *fdset)
 {
   value l, c;
   FD_ZERO(fdset);
+  int used = 0;
   for (l = fdlist; l != Val_int(0); l = Field(l, 1)) {
     c = Field(l, 0);
     if (Descr_kind_val(c) == KIND_SOCKET) {
+      used++;
+      if (used > FD_SETSIZE) return 0;
       FD_SET(Socket_val(c), fdset);
     } else {
       DEBUG_PRINT("Non socket value encountered");
