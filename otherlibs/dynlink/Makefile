@@ -30,7 +30,7 @@ COMPFLAGS=-w +33..39 -warn-error A -bin-annot -g -safe-string \
 OBJS=dynlinkaux.cmo dynlink.cmo
 
 COMPILEROBJS=\
-  ../../utils/misc.cmo ../../utils/config.cmo ../../utils/clflags.cmo \
+  ../../utils/config.cmo ../../utils/misc.cmo ../../utils/clflags.cmo \
   ../../utils/tbl.cmo ../../utils/consistbl.cmo \
   ../../utils/terminfo.cmo ../../utils/warnings.cmo \
   ../../parsing/asttypes.cmi \

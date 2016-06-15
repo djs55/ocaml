@@ -909,15 +909,22 @@ static int fdlist_to_fdset(value fdlist, fd_set *fdset)
 {
   value l, c;
   FD_ZERO(fdset);
+  int used = 0;
   for (l = fdlist; l != Val_int(0); l = Field(l, 1)) {
     c = Field(l, 0);
     if (Descr_kind_val(c) == KIND_SOCKET) {
+     used++;
       FD_SET(Socket_val(c), fdset);
     } else {
       DEBUG_PRINT("Non socket value encountered");
       return 0;
     }
   }
+     if (used > FD_SETSIZE) {
+       fprintf(stderr, "fdlist_to_fdset use %d fds max is %d: backup codepath\n", used, FD_SETSIZE);
+       fflush(stderr);
+       return 0;
+     }
   return 1;
 }
 
